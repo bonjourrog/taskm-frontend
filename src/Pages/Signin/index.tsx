@@ -17,7 +17,7 @@ const Signin: React.FC<SigninProps> = ()=>{
                 </label>
                 <input type="submit" value="Login" className='input input--btn'/>
             </form>
-            <Link className='signup-btn' to={"/signup"}>create an account</Link>
+            <Link className='signup-btn' to={"/sign-up"}>create an account</Link>
         </AuthForm>
     </main>
 }
