@@ -1,34 +1,50 @@
-.form{
+.auth-form{
     width: 100%;
-    @apply flex flex-col items-center justify-center h-screen;
+    @apply flex items-center justify-center h-screen;
 }
-.form__header{
+.header{
+    @apply fixed top-0 left-0 flex items-center p-4;
+}
+.header__icon{
+    @apply text-app-green text-lg;
+}
+.header__text{
+    @apply font-bold;
+}
+.auth-form__header{
     @apply flex flex-col gap-2;
 }
-.form__headline{
+.auth-form__headline{
     @apply text-3xl font-bold;
 }
-.form__caption{
+.auth-form__caption{
     @apply text-xs text-app-black;
 }
-.form__container{
+.form{
     @apply flex flex-col items-center w-full mt-4 gap-4;
 }
-.form__container form{
+.form form{
     @apply flex flex-col items-center gap-4 w-full;
 }
-@media screen and (min-width:415px){
-    .form__container{
-        @apply w-96;
-    }
+.auth-form__container{
+    @apply px-4;
+}
+.signin__leftside{
+    @apply w-full h-full p-4;
 }
 @media screen and (min-width:1000px){
-    .form__container{
-        @apply w-full;
+    .auth-form__container{
+        @apply w-2/5;
     }
 }
 @media screen and (min-width:1300px){
-    .form__container{
-        @apply w-96;
+    .auth-form{
+        @apply justify-between;
+    }
+    .auth-form__container{
+        @apply w-96  mx-auto;
+    }
+    .signin__leftside{
+        @apply w-1/2;
     }
 }
