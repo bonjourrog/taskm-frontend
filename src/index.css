@@ -19,3 +19,12 @@ body {
   min-height: 100vh;
   overflow: hidden;
 }
+.btn{
+  @apply px-4 py-2 rounded-md;
+}
+.btn--primary{
+  @apply bg-blue-500 text-white;
+}
+.btn--cancel{
+  @apply bg-transparent text-app-red font-thin;
+}
