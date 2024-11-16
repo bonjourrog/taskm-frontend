@@ -1,6 +1,9 @@
 .home{
     @apply flex w-screen h-screen; 
 }
+.home__list-dialog{
+    @apply absolute transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
 .sidebar{
     @apply hidden pt-10;
 }
@@ -44,9 +47,12 @@
     @apply inline border-b-2 border-app-green pr-2 font-thin;
 }
 .new-list-floating{
-    @apply absolute bottom-0 right-10 bg-white text-app-green text-5xl z-20;
+    @apply absolute bottom-0 right-10 bg-white text-app-green text-6xl z-20 cursor-pointer;
 }
 @media screen and (min-width:700px){
+    .home__list-dialog{
+        @apply transform-none top-36 left-6;
+    }
     .home__content{
         @apply bg-zinc-100;
     }
