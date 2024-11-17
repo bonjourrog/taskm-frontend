@@ -10,9 +10,7 @@ const NewItemDialog:React.FC<NewItemDialogProps> = ({message, icon, children})=>
             </div>
         ):undefined}
         {message?<p className='font-bold'>{message}</p>:undefined}
-        <form className='flex flex-col gap-4' onSubmit={(event)=>{event.preventDefault()}}>
-            {children}
-        </form>
+        {children}
     </div>
 }
 export default NewItemDialog;
