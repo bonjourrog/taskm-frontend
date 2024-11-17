@@ -1,21 +1,23 @@
 import { HiClipboardList } from 'react-icons/hi';
 import './Home.css';
 import { HomeProps } from './Home.props';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import Lists from './Lists';
 import { List } from '../../Entity/list';
 import { MdAddBox } from "react-icons/md";
-import { LISTS_ADATA_MOCK } from '../../Mocks/list.mock';
 import NewItemDialog from '../../Components/NewItemDialog';
 import { TbColorFilter } from "react-icons/tb";
 import ColorPicker from './ColorPicker';
+import { userService } from '../../services/user';
+import useListStore from '../../store/useListStore';
+import useUserStore from '../../store/useUserStore';
 
 const Home:React.FC<HomeProps> = ()=>{
+    const {newList, setNewList} = useListStore();
+    const {user} = useUserStore();
     const [innerWidth, setInnerWidth] = useState<number>(window.innerWidth);
-    const [lists, setLists] = useState<List[]>(LISTS_ADATA_MOCK);
-    const [colorSelected, setColorSelected] = useState<string>("");
+    const [lists, setLists] = useState<List[]>([]);
     const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
-    const [newList, setNewList] = useState<string>("");
     const [showNewItemDialog, setShowNewItemDialog] = useState<boolean>(false);
     const handleInnerWidth = ()=>{
         setInnerWidth(window.innerWidth)
@@ -26,10 +28,26 @@ const Home:React.FC<HomeProps> = ()=>{
         <span className="logo__text">TASKM</span>
     </div>
     }
+    const handleOnChange = (event:ChangeEvent<HTMLInputElement>)=>{
+        const {name, value} =  event.target;
+        setNewList({...newList,[name]:value} as List)
+    }
+    const handleOnSubmit = async(event:FormEvent<HTMLFormElement>)=>{
+        try {
+            event.preventDefault();
+            const _newList:Partial<List> = {...newList, user_id:user._id}
+            const respose = await userService.createList(_newList, user._id)
+            setShowNewItemDialog(false)
+            if(respose.error)throw new Error(respose.message)
+        } catch (error) {
+            console.log('An error has ocurred: ', error);
+            
+        }
+    }
     useEffect(()=>{
         window.addEventListener('resize', handleInnerWidth)
         return ()=>window.removeEventListener('resize', handleInnerWidth)
-    }, [])
+    }, []);
     return <main className='home'>
         <aside className='sidebar'>
             {LogoComponent()}
@@ -50,15 +68,17 @@ const Home:React.FC<HomeProps> = ()=>{
             <section className='home__main-content'>
                 {showNewItemDialog?<div className='home__list-dialog'>
                     <NewItemDialog message='New list'>
-                            <div className='relative flex items-center gap-4'>
-                                <input onChange={(event=>setNewList(event.target.value))} value={newList} type="text" className='input' placeholder='List name'/>
-                                <TbColorFilter onClick={()=>setShowColorPicker(true)} className='text-zinc-400 text-xl cursor-pointer hover:text-app-green'/>
-                                {showColorPicker?<ColorPicker text={newList} setShowColorPicker={setShowColorPicker} colorSelected={colorSelected} setColorSelected={setColorSelected}/>:undefined}
-                            </div>
-                            <div className='flex gap-2 justify-end'>
-                                <button onClick={()=>setShowNewItemDialog(false)} className='btn btn--cancel'>cancelar</button>
-                                <button className='btn btn--primary'>Create</button>
-                            </div>
+                                <form className='flex flex-col gap-4' onSubmit={handleOnSubmit}>
+                                <div className='relative flex items-center gap-4'>
+                                        <input onChange={handleOnChange} name="name" value={newList.name} type="text" className='input' placeholder='List name'/>
+                                        <TbColorFilter onClick={()=>setShowColorPicker(true)} className='text-zinc-400 text-xl cursor-pointer hover:text-app-green'/>
+                                        {showColorPicker?<ColorPicker  setShowColorPicker={setShowColorPicker}/>:undefined}
+                                </div>
+                                <div className='flex gap-2 justify-end'>
+                                    <button onClick={()=>setShowNewItemDialog(false)} className='btn btn--cancel'>cancelar</button>
+                                    <button className='btn btn--primary'>Create</button>
+                                </div>
+                            </form>
                     </NewItemDialog>
                 </div>:undefined}
                 <h2>@username</h2>
