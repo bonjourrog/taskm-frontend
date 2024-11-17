@@ -1,6 +1,6 @@
 import './Signin.css';
 import { SigninProps } from './Signin.props';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthForm from '../../Components/AuthForm';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { signin } from '../../services/auth';
