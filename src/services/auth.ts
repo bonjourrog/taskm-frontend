@@ -1,12 +1,7 @@
+import { Response } from '../Entity/response';
 import api from './api';
 
-interface Auth{
-    data:string;
-    error:boolean;
-    message:string;
-}
-
-export const signin = async(email:string, password:string):Promise<Auth|null>=>{
+export const signin = async(email:string, password:string):Promise<Response|null>=>{
     const {data} = await api.post('auth/sign-in',{email, password});
     return data;
 }
