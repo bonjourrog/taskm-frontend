@@ -3,18 +3,20 @@ import { ColorPickerProps } from './ColorPicker.props';
 import Colorful from '@uiw/react-color-colorful';
 import { FaFolder } from "react-icons/fa6";
 import { lighten } from 'polished';
+import useListStore from '../../../store/useListStore';
 
-const ColorPicker: React.FC<ColorPickerProps> = ({text,colorSelected, setColorSelected, setShowColorPicker}) => {
+const ColorPicker: React.FC<ColorPickerProps> = ({setShowColorPicker}) => {
+    const {newList, newList:{name, color}, setNewList} = useListStore();
     return <div className='color-picker'>
-        <div className='flex items-center gap-2 w-full px-3 py-1 rounded-2xl' style={{color:colorSelected?colorSelected:'#8fd4af', background:colorSelected?lighten(0.2, colorSelected):lighten(0.2, '#8fd4af')}}>
+        <div className='flex items-center gap-2 w-full px-3 py-1 rounded-2xl' style={{color:color?color:'#8fd4af', background:color?lighten(0.2, color):lighten(0.2, '#8fd4af')}}>
             <FaFolder/>
-            <p>{text?text.length>15?text.substring(0, 15)+'...':text:'testing color'}</p>
+            <p>{name?name.length>15?name.substring(0, 15)+'...':name:'testing color'}</p>
         </div>
         <Colorful
-            color={colorSelected}
+            color={color}
             disableAlpha={true}
             onChange={(color) => {
-                setColorSelected(color.hex)
+                setNewList({...newList, color:color.hex})
             }}
         />
         <button onClick={()=>setShowColorPicker(false)} className='btn btn--primary'>Aceptar</button>
