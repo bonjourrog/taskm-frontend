@@ -5,3 +5,12 @@ export const signin = async(email:string, password:string):Promise<Response|null
     const {data} = await api.post('auth/sign-in',{email, password});
     return data;
 }
+export const signup = async(user:{email:string, password:string,user_name:string}):Promise<Response>=>{
+    try {
+        const res = await api.post('auth/register/', user)
+        return res.data
+    } catch (error:any) {
+        return error.response.data
+    }
+    
+}
