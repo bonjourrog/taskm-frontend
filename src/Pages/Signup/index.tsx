@@ -5,6 +5,7 @@ import { SignupProps } from './Signup.props';
 import { Link, useNavigate } from 'react-router-dom';
 import { signup } from '../../services/auth';
 import { isEmailValid } from '../../Utils/auth';
+import Dialog from '../../Components/Dialog';
 
 interface FormData{
     user_name:string;
@@ -44,7 +45,7 @@ const Signup: React.FC<SignupProps> = ()=>{
         }
     }
     return <main className="signup">
-    {message.show?<p className='fixed top-10 left-1/2 transform -translate-x-1/2 py-2 px-6 rounded-lg bg-app-green text-white front-bold z-20'>{message.message}</p>:undefined}
+    {message.show?<Dialog headline={message.message}/>:undefined}
     <AuthForm headline={{first:"Join us and", last:"get organized"}} caption='Create an account to start managing your tasks efficiently.'>
             <form onSubmit={handleOnSubmit}>
                 <label htmlFor="" className='w-full text-zinc-700 font-bold text-sm'>
