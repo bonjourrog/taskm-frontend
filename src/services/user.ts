@@ -9,8 +9,8 @@ const createList = async(list:Partial<List>, user_id:string):Promise<Response>=>
 }
 const getAll = async(user_id:string):Promise<List[]>=>{
     const token: string = localStorage.getItem("authToken") as string;
-    const response = await api.get(`/list/${user_id}`, {headers:{Authorization:token}});
-    return response.data
+    const {data:{data}} = await api.get(`/list/${user_id}`, {headers:{Authorization:token}});
+    return data
 }
 
 export const  userService = {
