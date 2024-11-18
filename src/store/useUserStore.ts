@@ -11,7 +11,7 @@ const useUserStore = create<UserStoreState>(set=>({
         email:"",
         exp:0,
         user:""
-    } as User,
+    },
     setUser:(user:User)=>set({user})
 }))
 export default useUserStore;
