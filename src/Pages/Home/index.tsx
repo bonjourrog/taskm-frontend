@@ -79,6 +79,7 @@ const Home:React.FC<HomeProps> = ()=>{
                 <Lists lists={lists}/>
                 <button onClick={()=>setShowNewItemDialog(true)} className='new-list-btn'>+ New list</button>
             </section>
+            <p className='absolute bottom-10 left-1/2 transform -translate-x-1/2 text-red-300 font-bold cursor-pointer hover:text-red-400'>Sign out</p>
         </aside>
         <section className='home__content'>
             <header>
