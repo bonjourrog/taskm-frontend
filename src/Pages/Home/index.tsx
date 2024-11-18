@@ -44,10 +44,30 @@ const Home:React.FC<HomeProps> = ()=>{
             
         }
     }
+    const getAllLists = async()=>{
+        try {
+            const data = await userService.getAll(user._id);
+            const lists:List[] = data.map(elem=>{
+                if(!elem.color){
+                    return {...elem, color:"#8FD4AF"}
+                }
+                return elem
+            })
+            setLists(lists)
+        } catch (error) {
+            console.log('error getting lists: ', error);   
+        }
+        
+    }
     useEffect(()=>{
         window.addEventListener('resize', handleInnerWidth)
         return ()=>window.removeEventListener('resize', handleInnerWidth)
     }, []);
+    useEffect(()=>{
+        if(user._id){
+            getAllLists()
+        }
+    },[user])
     return <main className='home'>
         <aside className='sidebar'>
             {LogoComponent()}

@@ -14,7 +14,7 @@ const Lists: React.FC<ListsProps> = ({lists, innerWidth})=>{
     return <ul className='lists'>
         {
             lists.map(list=>(
-                <li key={list.id} onClick={()=>{handleClick(list.id)}} style={{background:innerWidth&&innerWidth<700||list.id == activeItem?lighten(0.2,list.color):'white', color:innerWidth&&innerWidth?list.color:activeItem===list.id?'white':'#3E3E3E'}} className='list'>
+                <li key={`${list.name}-${list.id}`} onClick={()=>{handleClick(list.id)}} style={{background:innerWidth&&innerWidth<700||list.id == activeItem?lighten(0.2,list.color):'white', color:innerWidth&&innerWidth?list.color:activeItem===list.id?'white':'#3E3E3E'}} className='list'>
                     <div className='flex items-center gap-2'>
                         <FaFolder style={{color:list.color}}/>
                         <span className='list__title'>{list.name.length>20?list.name.substring(0,20)+'...':list.name}</span>
