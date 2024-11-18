@@ -84,7 +84,7 @@ const Home:React.FC<HomeProps> = ()=>{
             <header>
                 {LogoComponent()}
                 <div className='flex items-center gap-2'>
-                    <p className='text-xs text-zinc-500'>@Username</p>
+                    <p className='text-xs text-zinc-500'>@{user.user}</p>
                     <div className='home__menu'>U</div>
                 </div>
             </header>
@@ -104,7 +104,7 @@ const Home:React.FC<HomeProps> = ()=>{
                             </form>
                     </NewItemDialog>
                 </div>:undefined}
-                <h2>@username</h2>
+                <h2>@{user.user}</h2>
                 <h1 className='list-name'>{lists.length>0?<p className='font-extrabold text-lg'>Lists</p>:"Create a new list"}</h1>
                 {
                     lists.length > 0?(
