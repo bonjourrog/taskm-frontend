@@ -32,8 +32,6 @@ const Signup: React.FC<SignupProps> = ()=>{
             if(!password || !email || !user_name)throw new Error('please fill all fields');
             if(!isEmailValid(email))throw new Error('invalid email');
             const res = await signup({...formData});
-            console.log(res);
-            
             if(res.error)throw new Error(res.message);
             navigate('/sign-in')
         } catch (error) {
