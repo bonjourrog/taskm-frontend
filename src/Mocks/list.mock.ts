@@ -2,7 +2,7 @@ import { List } from "../Entity/list";
 
 export const LISTS_ADATA_MOCK: List[] = [
     {
-        id: 'list1',
+        _id: 'list1',
         name: 'Compras Semanales',
         color: '#8FD4AF',
         tasks: [],
@@ -11,7 +11,7 @@ export const LISTS_ADATA_MOCK: List[] = [
         created_at: new Date('2024-11-12T09:00:00Z')
     },
     {
-        id: 'list2',
+        _id: 'list2',
         name: 'Proyecto Rediseño Web',
         color: '#918FD4',
         tasks: [],
@@ -20,7 +20,7 @@ export const LISTS_ADATA_MOCK: List[] = [
         created_at: new Date('2024-11-11T10:20:00Z')
     },
     {
-        id: 'list3',
+        _id: 'list3',
         name: 'Tareas del Hogar',
         color: '#D48F8F',
         tasks: [],
@@ -29,7 +29,7 @@ export const LISTS_ADATA_MOCK: List[] = [
         created_at: new Date('2024-11-10T14:00:00Z')
     },
     {
-        id: 'list4',
+        _id: 'list4',
         name: 'Planificación Financiera',
         color: '#DA4662',
         tasks: [],
@@ -38,7 +38,7 @@ export const LISTS_ADATA_MOCK: List[] = [
         created_at: new Date('2024-11-12T13:00:00Z')
     },
     {
-        id: 'list5',
+        _id: 'list5',
         name: 'Estudio y Aprendizaje',
         color: '#6472EF',
         tasks: [],
