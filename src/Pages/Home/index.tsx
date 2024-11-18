@@ -39,7 +39,8 @@ const Home:React.FC<HomeProps> = ()=>{
             const respose = await userService.createList(_newList, user._id)
             setShowNewItemDialog(false);
             if(respose.error)throw new Error(respose.message);
-            _newList.color = "#8FD4AF";
+            !newList.color?_newList.color = "#8FD4AF":_newList.color = newList.color
+            setNewList({name:"",color:"",} as List);
             setLists([...lists, _newList])
         } catch (error) {
             console.log('An error has ocurred: ', error);
