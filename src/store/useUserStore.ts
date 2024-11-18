@@ -6,7 +6,12 @@ interface UserStoreState{
     setUser:(user:User)=>void;
 }
 const useUserStore = create<UserStoreState>(set=>({
-    user:{} as User,
+    user:{
+        _id:"",
+        email:"",
+        exp:0,
+        user:""
+    } as User,
     setUser:(user:User)=>set({user})
 }))
 export default useUserStore;
