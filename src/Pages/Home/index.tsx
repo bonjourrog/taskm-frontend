@@ -33,12 +33,14 @@ const Home:React.FC<HomeProps> = ()=>{
         setNewList({...newList,[name]:value} as List)
     }
     const handleOnSubmit = async(event:FormEvent<HTMLFormElement>)=>{
+        event.preventDefault();
         try {
-            event.preventDefault();
-            const _newList:Partial<List> = {...newList, user_id:user._id}
+            const _newList:List = {...newList, user_id:user._id} as List
             const respose = await userService.createList(_newList, user._id)
-            setShowNewItemDialog(false)
-            if(respose.error)throw new Error(respose.message)
+            setShowNewItemDialog(false);
+            if(respose.error)throw new Error(respose.message);
+            _newList.color = "#8FD4AF";
+            setLists([...lists, _newList])
         } catch (error) {
             console.log('An error has ocurred: ', error);
             
