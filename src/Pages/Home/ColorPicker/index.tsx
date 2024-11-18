@@ -4,6 +4,7 @@ import Colorful from '@uiw/react-color-colorful';
 import { FaFolder } from "react-icons/fa6";
 import { lighten } from 'polished';
 import useListStore from '../../../store/useListStore';
+import { List } from '../../../Entity/list';
 
 const ColorPicker: React.FC<ColorPickerProps> = ({setShowColorPicker}) => {
     const {newList, newList:{name, color}, setNewList} = useListStore();
@@ -16,7 +17,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({setShowColorPicker}) => {
             color={color}
             disableAlpha={true}
             onChange={(color) => {
-                setNewList({...newList, color:color.hex})
+                setNewList({...newList, color:color.hex} as List)
             }}
         />
         <button onClick={()=>setShowColorPicker(false)} className='btn btn--primary'>Aceptar</button>
