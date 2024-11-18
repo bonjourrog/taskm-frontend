@@ -1,7 +1,7 @@
 import { Task } from "./task";
 
 export interface List{
-    id: string;
+    _id: string;
     name: string;
     color: string;
     tasks: Task[];
