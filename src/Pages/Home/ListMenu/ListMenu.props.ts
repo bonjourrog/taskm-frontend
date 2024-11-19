@@ -1,1 +1,3 @@
-export interface ListMenuProps{}
+export interface ListMenuProps{
+    listId:string;
+}
