@@ -1,7 +1,7 @@
 .lists{
     height: 100%;
     max-height: calc(100vh - 12em);
-    @apply flex flex-col gap-8 w-full py-6 overflow-scroll;
+    @apply flex flex-col gap-8 w-full py-6 overflow-y-auto overflow-x-hidden;
 }
 .list{
     @apply flex items-center justify-between px-6 py-4 w-11/12 mx-auto rounded-3xl shadow-lg shadow-zinc-200 cursor-pointer transition-all duration-200 ease-in-out;
