@@ -15,10 +15,9 @@ import { removeToken } from '../../Utils/auth';
 import Dialog from '../../Components/Dialog';
 
 const Home:React.FC<HomeProps> = ()=>{
-    const {newList, setNewList} = useListStore();
+    const {newList, setNewList, lists, setLists} = useListStore();
     const {user, setUser} = useUserStore();
     const [innerWidth, setInnerWidth] = useState<number>(window.innerWidth);
-    const [lists, setLists] = useState<List[]>([]);
     const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
     const [showNewItemDialog, setShowNewItemDialog] = useState<boolean>(false);
     const [message, setMessage] = useState<{message:string, show:boolean}>({message:"", show:false});
