@@ -12,6 +12,7 @@ import { userService } from '../../services/user';
 import useListStore from '../../store/useListStore';
 import useUserStore from '../../store/useUserStore';
 import { removeToken } from '../../Utils/auth';
+import Dialog from '../../Components/Dialog';
 
 const Home:React.FC<HomeProps> = ()=>{
     const {newList, setNewList} = useListStore();
@@ -20,6 +21,7 @@ const Home:React.FC<HomeProps> = ()=>{
     const [lists, setLists] = useState<List[]>([]);
     const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
     const [showNewItemDialog, setShowNewItemDialog] = useState<boolean>(false);
+    const [message, setMessage] = useState<{message:string, show:boolean}>({message:"", show:false});
     const handleInnerWidth = ()=>{
         setInnerWidth(window.innerWidth)
     }
@@ -42,11 +44,14 @@ const Home:React.FC<HomeProps> = ()=>{
             setShowNewItemDialog(false);
             if(respose.error)throw new Error(respose.message);
             !newList.color?_newList.color = "#8FD4AF":_newList.color = newList.color
-            setNewList({name:"",color:"",} as List);
+            setNewList({name:"",color:""} as List);
             setLists([...lists, _newList])
         } catch (error) {
-            console.log('An error has ocurred: ', error);
-            
+            const errorMessage = error instanceof Error ? error.message : 'Unkown error';
+            setMessage({message:errorMessage, show:true})
+            setTimeout(()=>{
+                setMessage({message:'', show:false})
+            },3000)
         }
     }
     const getAllLists = async()=>{
@@ -62,7 +67,11 @@ const Home:React.FC<HomeProps> = ()=>{
                 setLists(lists)
             }
         } catch (error) {
-            console.log('error getting lists: ', error);   
+            const errorMessage = error instanceof Error ? error.message : 'Unkown error'
+            setMessage({message:errorMessage, show:true})
+            setTimeout(()=>{
+                setMessage({message:'', show:false})
+            },3000)
         }
         
     }
@@ -83,6 +92,7 @@ const Home:React.FC<HomeProps> = ()=>{
         <aside className='sidebar'>
             {LogoComponent()}
             <section className='home__lists'>
+            {message.show?<Dialog headline={message.message}/>:undefined}
                 <h2>Lists</h2>
                 <Lists lists={lists}/>
                 <button onClick={()=>setShowNewItemDialog(true)} className='new-list-btn'>+ New list</button>
