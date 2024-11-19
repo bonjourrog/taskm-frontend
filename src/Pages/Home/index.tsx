@@ -50,13 +50,15 @@ const Home:React.FC<HomeProps> = ()=>{
     const getAllLists = async()=>{
         try {
             const data = await userService.getAll(user._id);
-            const lists:List[] = data.map(elem=>{
-                if(!elem.color){
-                    return {...elem, color:"#8FD4AF"}
-                }
-                return elem
-            })
-            setLists(lists)
+            if(data && data.length>0){
+                const lists:List[] = data.map(elem=>{
+                    if(!elem.color){
+                        return {...elem, color:"#8FD4AF"}
+                    }
+                    return elem
+                })
+                setLists(lists)
+            }
         } catch (error) {
             console.log('error getting lists: ', error);   
         }
