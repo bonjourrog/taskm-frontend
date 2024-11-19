@@ -11,10 +11,11 @@ import ColorPicker from './ColorPicker';
 import { userService } from '../../services/user';
 import useListStore from '../../store/useListStore';
 import useUserStore from '../../store/useUserStore';
+import { removeToken } from '../../Utils/auth';
 
 const Home:React.FC<HomeProps> = ()=>{
     const {newList, setNewList} = useListStore();
-    const {user} = useUserStore();
+    const {user, setUser} = useUserStore();
     const [innerWidth, setInnerWidth] = useState<number>(window.innerWidth);
     const [lists, setLists] = useState<List[]>([]);
     const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
@@ -64,6 +65,10 @@ const Home:React.FC<HomeProps> = ()=>{
         }
         
     }
+    const handleSignout = ()=>{
+        setUser({_id:"", email:"", exp:0, user:""})
+        removeToken()
+    }
     useEffect(()=>{
         window.addEventListener('resize', handleInnerWidth)
         return ()=>window.removeEventListener('resize', handleInnerWidth)
@@ -81,7 +86,7 @@ const Home:React.FC<HomeProps> = ()=>{
                 <Lists lists={lists}/>
                 <button onClick={()=>setShowNewItemDialog(true)} className='new-list-btn'>+ New list</button>
             </section>
-            <p className='absolute bottom-10 left-1/2 transform -translate-x-1/2 text-red-300 font-bold cursor-pointer hover:text-red-400'>Sign out</p>
+            <p onClick={handleSignout} className='absolute bottom-10 left-1/2 transform -translate-x-1/2 text-red-300 font-bold cursor-pointer hover:text-red-400'>Sign out</p>
         </aside>
         <section className='home__content'>
             <header>
