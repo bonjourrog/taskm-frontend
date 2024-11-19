@@ -36,6 +36,7 @@ const Home:React.FC<HomeProps> = ()=>{
     const handleOnSubmit = async(event:FormEvent<HTMLFormElement>)=>{
         event.preventDefault();
         try {
+            if(!newList.name || newList.name.length<3)throw new Error('list name is too short');
             const _newList:List = {...newList, user_id:user._id} as List
             const respose = await userService.createList(_newList, user._id)
             setShowNewItemDialog(false);
