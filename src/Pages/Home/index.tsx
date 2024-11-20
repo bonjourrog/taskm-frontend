@@ -13,6 +13,7 @@ import useListStore from '../../store/useListStore';
 import useUserStore from '../../store/useUserStore';
 import { removeToken } from '../../Utils/auth';
 import Dialog from '../../Components/Dialog';
+import { Response } from '../../Entity/response';
 
 const Home:React.FC<HomeProps> = ()=>{
     const {newList, setNewList, lists, setLists} = useListStore();
@@ -44,7 +45,7 @@ const Home:React.FC<HomeProps> = ()=>{
             if(respose.error)throw new Error(respose.message);
             !newList.color?_newList.color = "#8FD4AF":_newList.color = newList.color
             setNewList({name:"",color:""} as List);
-            setLists([...lists, _newList])
+            await getAllLists()
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'Unkown error';
             setMessage({message:errorMessage, show:true})
@@ -55,7 +56,9 @@ const Home:React.FC<HomeProps> = ()=>{
     }
     const getAllLists = async()=>{
         try {
-            const data = await userService.getAll(user._id);
+            const respose:Response = await userService.getAll(user._id);
+            if(respose.error)throw new Error(respose.message);
+            const data:List[]= respose.data;
             if(data && data.length>0){
                 const lists:List[] = data.map(elem=>{
                     if(!elem.color){
