@@ -12,6 +12,9 @@
 .list__progress{
     @apply flex items-center;
 }
+.lists__dialog{
+    @apply absolute top-0 left-0 w-screen h-screen bg-zinc-600 opacity-15 z-30 cursor-default;
+}
 @media screen and (min-width:500px) {
     .lists{
         @apply px-6;

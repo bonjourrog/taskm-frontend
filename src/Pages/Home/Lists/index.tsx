@@ -16,8 +16,8 @@ const Lists: React.FC<ListsProps> = ({lists, innerWidth})=>{
     }
     return <ul className='lists'>
         {displayDialog?<>
-            <div onClick={()=>{setDisplayDialog(false)}} className='absolute top-0 left-0 w-screen h-screen bg-zinc-600 opacity-15 z-10 cursor-default'></div>
-                <ListMenu listId={activeItem}/>
+            <div onClick={()=>{setDisplayDialog(false)}} className='lists__dialog'></div>
+            <ListMenu listId={activeItem}/>
             </>:undefined
         }
         {
