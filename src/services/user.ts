@@ -11,10 +11,14 @@ const createList = async(list:Partial<List>, user_id:string):Promise<Response>=>
         return error.response.data
     }
 }
-const getAll = async(user_id:string):Promise<List[]>=>{
-    const token: string = localStorage.getItem("authToken") as string;
-    const {data:{data}} = await api.get(`/list/${user_id}`, {headers:{Authorization:token}});
-    return data
+const getAll = async(user_id:string):Promise<Response>=>{
+    try {
+        const token: string = localStorage.getItem("authToken") as string;
+        const {data} = await api.get(`/list/${user_id}`, {headers:{Authorization:token}});
+        return data
+    } catch (error:any) {
+        return error.response.data
+    }
 }
 const deleteList = async(list_id:string):Promise<Response>=>{
     try {
