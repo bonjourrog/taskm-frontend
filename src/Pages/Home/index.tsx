@@ -1,27 +1,26 @@
 import { HiClipboardList } from 'react-icons/hi';
 import './Home.css';
 import { HomeProps } from './Home.props';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Lists from './Components/Lists';
 import { List } from '../../Entity/list';
 import { MdAddBox } from "react-icons/md";
 import NewItemDialog from '../../Components/NewItemDialog';
-import { TbColorFilter } from "react-icons/tb";
-import ColorPicker from './Components/ColorPicker';
 import { userService } from '../../services/user';
 import useListStore from '../../store/useListStore';
 import useUserStore from '../../store/useUserStore';
 import { removeToken } from '../../Utils/auth';
 import Dialog from '../../Components/Dialog';
 import { Response } from '../../Entity/response';
+import ListForm from './Components/ListForm';
 
 const Home:React.FC<HomeProps> = ()=>{
-    const {newList, setNewList, lists, setLists} = useListStore();
+    const {lists, setLists} = useListStore();
     const {user, setUser} = useUserStore();
     const [innerWidth, setInnerWidth] = useState<number>(window.innerWidth);
-    const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
     const [showNewItemDialog, setShowNewItemDialog] = useState<boolean>(false);
     const [message, setMessage] = useState<{message:string, show:boolean}>({message:"", show:false});
+
     const handleInnerWidth = ()=>{
         setInnerWidth(window.innerWidth)
     }
@@ -30,29 +29,6 @@ const Home:React.FC<HomeProps> = ()=>{
         <HiClipboardList className="logo__icon"/>
         <span className="logo__text">TASKM</span>
     </div>
-    }
-    const handleOnChange = (event:ChangeEvent<HTMLInputElement>)=>{
-        const {name, value} =  event.target;
-        setNewList({...newList,[name]:value} as List)
-    }
-    const handleOnSubmit = async(event:FormEvent<HTMLFormElement>)=>{
-        event.preventDefault();
-        try {
-            if(!newList.name || newList.name.length<3)throw new Error('list name is too short');
-            const _newList:List = {...newList, user_id:user._id} as List
-            const respose = await userService.createList(_newList, user._id)
-            setShowNewItemDialog(false);
-            if(respose.error)throw new Error(respose.message);
-            !newList.color?_newList.color = "#8FD4AF":_newList.color = newList.color
-            setNewList({name:"",color:""} as List);
-            await getAllLists()
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Unkown error';
-            setMessage({message:errorMessage, show:true})
-            setTimeout(()=>{
-                setMessage({message:'', show:false})
-            },3000)
-        }
     }
     const getAllLists = async()=>{
         try {
@@ -112,17 +88,7 @@ const Home:React.FC<HomeProps> = ()=>{
             <section className='home__main-content'>
                 {showNewItemDialog?<div className='home__list-dialog'>
                     <NewItemDialog message='New list'>
-                                <form className='flex flex-col gap-4' onSubmit={handleOnSubmit}>
-                                <div className='relative flex items-center gap-4'>
-                                        <input onChange={handleOnChange} name="name" value={newList.name} type="text" className='input' placeholder='List name'/>
-                                        <TbColorFilter onClick={()=>setShowColorPicker(true)} className='text-zinc-400 text-xl cursor-pointer hover:text-app-green'/>
-                                        {showColorPicker?<ColorPicker  setShowColorPicker={setShowColorPicker}/>:undefined}
-                                </div>
-                                <div className='flex gap-2 justify-end'>
-                                    <button onClick={()=>setShowNewItemDialog(false)} className='btn btn--cancel'>cancelar</button>
-                                    <button className='btn btn--primary'>Create</button>
-                                </div>
-                            </form>
+                        <ListForm getAllLists={getAllLists} setShowNewItemDialog={setShowNewItemDialog} setMessage={setMessage}/>
                     </NewItemDialog>
                 </div>:undefined}
                 <h2>@{user.user}</h2>
