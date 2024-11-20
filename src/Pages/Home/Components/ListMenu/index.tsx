@@ -1,8 +1,8 @@
-import { List } from '../../../Entity/list';
-import { Response } from '../../../Entity/response';
-import { userService } from '../../../services/user';
-import useDialogtore from '../../../store/useDialogStore';
-import useListStore from '../../../store/useListStore';
+import { List } from '../../../../Entity/list';
+import { Response } from '../../../../Entity/response';
+import { userService } from '../../../../services/user';
+import useDialogtore from '../../../../store/useDialogStore';
+import useListStore from '../../../../store/useListStore';
 import './ListMenu.css';
 import { ListMenuProps } from './ListMenu.props';
 

@@ -5,8 +5,8 @@ import { FaFolder } from "react-icons/fa6";
 import { TbProgress } from "react-icons/tb";
 import { HiDotsVertical } from "react-icons/hi";
 import { useState } from 'react';
-import ListMenu from '../ListMenu';
-import useDialogtore from '../../../store/useDialogStore';
+import ListMenu from '../../Components/ListMenu';
+import useDialogtore from '../../../../store/useDialogStore';
 
 const Lists: React.FC<ListsProps> = ({lists, innerWidth})=>{
     const {displayDialog, setDisplayDialog} = useDialogtore()

@@ -3,8 +3,8 @@ import { ColorPickerProps } from './ColorPicker.props';
 import Colorful from '@uiw/react-color-colorful';
 import { FaFolder } from "react-icons/fa6";
 import { lighten } from 'polished';
-import useListStore from '../../../store/useListStore';
-import { List } from '../../../Entity/list';
+import useListStore from '../../../../store/useListStore';
+import { List } from '../../../../Entity/list';
 
 const ColorPicker: React.FC<ColorPickerProps> = ({setShowColorPicker}) => {
     const {newList, newList:{name, color}, setNewList} = useListStore();
