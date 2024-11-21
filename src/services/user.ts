@@ -29,9 +29,19 @@ const deleteList = async(list_id:string):Promise<Response>=>{
         return error.response.data
     }
 }
+const updateList = async(list_id:string, list:List):Promise<Response>=>{
+    try {
+        const token: string = localStorage.getItem("authToken") as string;
+        const {data} = await api.put(`list/${list_id}`, list, {headers:{Authorization:token}})
+        return data
+    } catch (error:any) {
+        return error.response.data
+    }
+}
 
 export const  userService = {
     createList,
     getAll,
-    deleteList
+    deleteList,
+    updateList
 }
