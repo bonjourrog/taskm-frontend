@@ -42,7 +42,7 @@ const Lists: React.FC<ListsProps> = ({lists, innerWidth})=>{
             <ListMenu listId={activeItem} setIsEditing={setIsEditing}/>
             </>:undefined
         }
-        {isEditing?<div className='absolute left-72 flex flex-col gap-2 bg-white p-2 rounded-lg shadow-sm shadow-zinc-200 z-10'>
+        {isEditing?<div className='edit-menu'>
             <input className='py-1 px-2 rounded-md text-white' style={{background:lighten(0.2, newList.color as string), outline:`.2em solid ${newList.color}`}} type="text" value={newList.name? newList.name:""} onChange={(event)=>{
                 const {value} = event.target
                     setNewList({...newList as List, name:value})
