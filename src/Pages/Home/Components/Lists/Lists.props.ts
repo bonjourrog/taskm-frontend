@@ -1,4 +1,4 @@
-import { List } from "../../../Entity/list";
+import { List } from "../../../../Entity/list";
 
 export interface ListsProps{
     lists: List[];
