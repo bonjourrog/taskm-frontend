@@ -6,8 +6,8 @@ import useListStore from '../../../../store/useListStore';
 import './ListMenu.css';
 import { ListMenuProps } from './ListMenu.props';
 
-const ListMenu:React.FC<ListMenuProps> = ({listId})=>{
-    const {lists, setLists} = useListStore()
+const ListMenu:React.FC<ListMenuProps> = ({listId, setIsEditing})=>{
+    const {lists, setLists, setNewList} = useListStore()
     const {setDisplayDialog} = useDialogtore()
     const handleDelete = async()=>{
         try {
@@ -22,8 +22,14 @@ const ListMenu:React.FC<ListMenuProps> = ({listId})=>{
             
         }
     }
+    const hanldeEdit = ()=>{
+        const list:List = lists.find(elem=>elem._id == listId) as List;
+        setNewList(list)
+        setDisplayDialog(false)
+        setIsEditing(true);
+    }        
     return <ul className='list-menu'>
-        <li className='list-menu__item list-menu__item--edit'>Edit</li>
+        <li onClick={hanldeEdit} className='list-menu__item list-menu__item--edit'>Edit</li>
         <li onClick={handleDelete} className='list-menu__item list-menu__item--delete'>Delete</li>
     </ul>
 }

@@ -7,19 +7,56 @@ import { HiDotsVertical } from "react-icons/hi";
 import { useState } from 'react';
 import ListMenu from '../../Components/ListMenu';
 import useDialogtore from '../../../../store/useDialogStore';
+import Colorful from '@uiw/react-color-colorful';
+import useListStore from '../../../../store/useListStore';
+import { List } from '../../../../Entity/list';
+import { userService } from '../../../../services/user';
+import { Response } from '../../../../Entity/response';
+import useUserStore from '../../../../store/useUserStore';
 
 const Lists: React.FC<ListsProps> = ({lists, innerWidth})=>{
     const {displayDialog, setDisplayDialog} = useDialogtore()
+    const {newList, setNewList, setLists} = useListStore()
+    const {user} = useUserStore()
+    const [isEditing, setIsEditing] = useState<boolean>(false);
     const [activeItem, setActiveItem] = useState<string>("");
     const handleClick = (id:string)=>{
         setActiveItem(id);
     }
+    const handleListUpdate = async()=>{
+        try {
+            const repsose: Response = await userService.updateList(activeItem, newList as List);
+            if(repsose.error)throw new Error(repsose.message);
+            const lists = await userService.getAll(user._id)
+            if(lists.error)throw new Error(lists.message);
+            setLists(lists.data)
+            setIsEditing(false)
+        } catch (error) {
+            const messageError = error instanceof Error ? error.message : 'Unkown error';
+            console.log(messageError);
+        }
+    }
     return <ul className='lists'>
         {displayDialog?<>
             <div onClick={()=>{setDisplayDialog(false)}} className='lists__dialog'></div>
-            <ListMenu listId={activeItem}/>
+            <ListMenu listId={activeItem} setIsEditing={setIsEditing}/>
             </>:undefined
         }
+        {isEditing?<div className='absolute left-72 flex flex-col gap-2 bg-white p-2 rounded-lg shadow-sm shadow-zinc-200 z-10'>
+            <input className='py-1 px-2 rounded-md text-white' style={{background:lighten(0.2, newList.color as string), outline:`.2em solid ${newList.color}`}} type="text" value={newList.name? newList.name:""} onChange={(event)=>{
+                const {value} = event.target
+                    setNewList({...newList as List, name:value})
+            }}/>
+            <Colorful
+            color={newList.color}
+            disableAlpha={true}
+            onChange={(color) => {
+                setNewList({...newList, color:color.hex} as List)
+            }}
+        />
+        <button onClick={handleListUpdate} className='btn btn--primary'>Aceptar</button>
+        <button onClick={()=>setIsEditing(false)} className='btn btn--cancel'>Cancelar</button>
+        </div>:undefined}
         {
             lists.map(list=>(
                 <li key={list._id} onClick={()=>{handleClick(list._id)}} style={{background:innerWidth&&innerWidth<700||list._id == activeItem?lighten(0.2,list.color):'white', color:innerWidth&&innerWidth?list.color:activeItem===list._id?'white':'#3E3E3E'}} className='list'>
