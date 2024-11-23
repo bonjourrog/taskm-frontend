@@ -48,11 +48,21 @@ const createTask = async(task:Task):Promise<Response>=>{
         return error.response.data
     }
 }
+const getAllTasks = async(list_id: string):Promise<Response>=>{
+    try {
+        const token: string = localStorage.getItem("authToken") as string;
+        const {data} = await api.get(`task/${list_id}`, {headers:{Authorization:token}})
+        return data;
+    } catch (error:any) {
+        return error.response.data
+    }
+}
 
 export const  userService = {
     createList,
     getAll,
     deleteList,
     updateList,
-    createTask
+    createTask,
+    getAllTasks
 }
