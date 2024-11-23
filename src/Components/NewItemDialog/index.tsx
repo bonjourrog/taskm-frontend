@@ -2,14 +2,14 @@ import './NewItemDialog.css';
 import { NewItemDialogProps } from './NewItemDialog.props';
 
 const NewItemDialog:React.FC<NewItemDialogProps> = ({message, icon, children})=>{
-    return <div className='flex flex-col gap-4 w-80 h-auto p-8 shadow-lg shadow-zinc-200 rounded-3xl bg-white'>
+    return <div className='new-item-dialog'>
         {icon&&Object.keys(icon).length>0?(
-            <div>
+            <header className='header'>
                 {icon?.icon_node}
                 {icon?.headline}
-            </div>
+            </header>
         ):undefined}
-        {message?<p className='font-bold'>{message}</p>:undefined}
+        {message?<p className='new-item-dialog__message'>{message}</p>:undefined}
         {children}
     </div>
 }
