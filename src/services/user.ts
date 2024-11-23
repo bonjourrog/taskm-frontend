@@ -57,6 +57,15 @@ const getAllTasks = async(list_id: string):Promise<Response>=>{
         return error.response.data
     }
 }
+const updateTask = async(task_id: string, task:Task):Promise<Response>=>{
+    try {
+        const token: string = localStorage.getItem("authToken") as string;
+        const {data} = await api.put(`task/${task_id}`, task, {headers:{Authorization:token}})
+        return data;
+    } catch (error:any) {
+        return error.response.data
+    }
+}
 
 export const  userService = {
     createList,
@@ -64,5 +73,6 @@ export const  userService = {
     deleteList,
     updateList,
     createTask,
-    getAllTasks
+    getAllTasks,
+    updateTask
 }
