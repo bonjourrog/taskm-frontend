@@ -15,10 +15,13 @@ import { Response } from '../../Entity/response';
 import ListForm from './Components/ListForm';
 import { MdTaskAlt } from "react-icons/md";
 import TaskForm from './Components/TaskForm';
+import useTaskStore from '../../store/useTaskStore';
+import TaskCard from './Components/TaskCard';
 
 const Home:React.FC<HomeProps> = ()=>{
     const {lists, setLists, activeItem} = useListStore();
     const {user, setUser} = useUserStore();
+    const {tasks} = useTaskStore();
     const [innerWidth, setInnerWidth] = useState<number>(window.innerWidth);
     const [showNewItemDialog, setShowNewItemDialog] = useState<boolean>(false);
     const [message, setMessage] = useState<{message:string, show:boolean}>({message:"", show:false});
@@ -96,7 +99,7 @@ const Home:React.FC<HomeProps> = ()=>{
                 </div>:undefined}
                 <div className='relative flex items-center justify-between w-full pr-20 mt-10'>
                     <h2>@{user.user}</h2>
-                    {displayNewTaskForm?<div className='absolute right-6 top-5'>
+                    {displayNewTaskForm?<div className='absolute right-6 top-5 z-10'>
                         <NewItemDialog icon={{icon_node:<MdTaskAlt className='font-bold text-5xl text-app-green'/>,headline:'New task'}}>
                             <TaskForm setDisplaynewTaskForm={setDisplaynewTaskForm}/>
                         </NewItemDialog>
@@ -106,8 +109,15 @@ const Home:React.FC<HomeProps> = ()=>{
                 <h1 className='list-name'>{lists.length>0?<p className='font-extrabold text-lg'>{!activeItem?'List':lists.find(elem=>elem._id===activeItem)?.name}</p>:"Create a new list"}</h1>
                 {
                     lists.length > 0?(
-                        innerWidth>700?<div>
-
+                        innerWidth>700?<div className='flex flex-col gap-10 w-3/4 mt-10'>
+                            <div className='flex flex-col gap-4 ml-5'>
+                                <p>Todo</p>
+                                {tasks && tasks.length>0?tasks.map(task=>!task.done?<TaskCard key={task._id} task={task}/>:undefined):undefined}
+                            </div>
+                            <div className='flex flex-col gap-4 ml-5'>
+                                <p>Done</p>
+                                {tasks && tasks.length>0?tasks.map(task=>task.done?<TaskCard key={task._id} task={task}/>:undefined):undefined}
+                            </div>
                         </div>:<Lists lists={lists} innerWidth={innerWidth}/>
                     ):<img src="https://res.cloudinary.com/dcezb5utw/image/upload/v1731703774/taskm/hh7syclotluewskbc2fm.png" alt="notes icon" className='w-[40em] mx-auto my-auto'/>
                 }

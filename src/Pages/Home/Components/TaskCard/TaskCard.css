@@ -1,0 +1,24 @@
+.task-card{
+    @apply flex items-center justify-between p-3 px-6 bg-white rounded-sm w-full ml-6;
+}
+.task-card__leftside{
+    @apply flex items-center gap-4;
+}
+.task-card__rightside{
+    @apply flex items-center gap-2;
+}
+.task-card__checkbox{
+    @apply flex items-center justify-center w-4 h-4 shadow-lg shadow-app-green rounded-sm cursor-pointer;
+}
+.task-card__checkbox-icon{
+    @apply text-white text-xs;
+}
+.task-card__title{
+    @apply relative font-bold cursor-text select-none;
+}
+.task-card__title:hover>.task-card__tooltip{
+    @apply block;
+}
+.task-card__tooltip{
+    @apply absolute hidden text-nowrap -top-7 left-1/2 transform -translate-x-1/2 text-xs bg-app-green text-white px-1 py-1 rounded-sm opacity-85;
+}
