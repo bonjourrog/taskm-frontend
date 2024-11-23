@@ -2,7 +2,7 @@
     @apply flex w-screen h-screen; 
 }
 .home__list-dialog{
-    @apply absolute transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+    @apply absolute transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10;
 }
 .sidebar{
     @apply hidden pt-10;
