@@ -6,6 +6,8 @@ interface ListStoreState{
     setNewList:(newList: List)=>void;
     lists:List[];
     setLists: (lists:List[])=>void;
+    activeItem: string;
+    setActiveItem:(activeItem: string)=>void;
 }
 
 const useListStore = create<ListStoreState>(set=>({
@@ -14,6 +16,8 @@ const useListStore = create<ListStoreState>(set=>({
         color:"",
     },
     lists:[],
+    activeItem: "",
+    setActiveItem:(activeItem: string)=>set({activeItem}),
     setNewList:(newList: List)=>set({newList}),
     setLists:(lists:List[])=>set({lists})
 }))
