@@ -6,14 +6,14 @@ import useListStore from '../../../../store/useListStore';
 import './ListMenu.css';
 import { ListMenuProps } from './ListMenu.props';
 
-const ListMenu:React.FC<ListMenuProps> = ({listId, setIsEditing})=>{
-    const {lists, setLists, setNewList} = useListStore()
+const ListMenu:React.FC<ListMenuProps> = ({setIsEditing})=>{
+    const {lists, setLists, setNewList, activeItem} = useListStore()
     const {setDisplayDialog} = useDialogtore()
     const handleDelete = async()=>{
         try {
-            const response: Response = await userService.deleteList(listId);
+            const response: Response = await userService.deleteList(activeItem);
             if(response.error)throw new Error(response.message);
-            const newList: List[] = lists.filter(list=>list._id != listId)
+            const newList: List[] = lists.filter(list=>list._id != activeItem)
             setLists(newList)
             setDisplayDialog(false)
         } catch (error) {
@@ -23,7 +23,7 @@ const ListMenu:React.FC<ListMenuProps> = ({listId, setIsEditing})=>{
         }
     }
     const hanldeEdit = ()=>{
-        const list:List = lists.find(elem=>elem._id == listId) as List;
+        const list:List = lists.find(elem=>elem._id == activeItem) as List;
         setNewList(list)
         setDisplayDialog(false)
         setIsEditing(true);

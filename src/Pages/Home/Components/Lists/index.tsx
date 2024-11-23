@@ -16,10 +16,10 @@ import useUserStore from '../../../../store/useUserStore';
 
 const Lists: React.FC<ListsProps> = ({lists, innerWidth})=>{
     const {displayDialog, setDisplayDialog} = useDialogtore()
-    const {newList, setNewList, setLists} = useListStore()
+    const {newList, setNewList, setLists, activeItem, setActiveItem} = useListStore()
     const {user} = useUserStore()
     const [isEditing, setIsEditing] = useState<boolean>(false);
-    const [activeItem, setActiveItem] = useState<string>("");
+    
     const handleClick = (id:string)=>{
         setActiveItem(id);
     }
@@ -39,7 +39,7 @@ const Lists: React.FC<ListsProps> = ({lists, innerWidth})=>{
     return <ul className='lists'>
         {displayDialog?<>
             <div onClick={()=>{setDisplayDialog(false)}} className='lists__dialog'></div>
-            <ListMenu listId={activeItem} setIsEditing={setIsEditing}/>
+            <ListMenu setIsEditing={setIsEditing}/>
             </>:undefined
         }
         {isEditing?<div className='edit-menu'>
