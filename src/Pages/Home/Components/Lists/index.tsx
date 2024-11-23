@@ -13,15 +13,27 @@ import { List } from '../../../../Entity/list';
 import { userService } from '../../../../services/user';
 import { Response } from '../../../../Entity/response';
 import useUserStore from '../../../../store/useUserStore';
+import useTaskStore from '../../../../store/useTaskStore';
+import { Task } from '../../../../Entity/task';
 
 const Lists: React.FC<ListsProps> = ({lists, innerWidth})=>{
     const {displayDialog, setDisplayDialog} = useDialogtore()
     const {newList, setNewList, setLists, activeItem, setActiveItem} = useListStore()
     const {user} = useUserStore()
+    const {setTasks} = useTaskStore()
     const [isEditing, setIsEditing] = useState<boolean>(false);
     
-    const handleClick = (id:string)=>{
-        setActiveItem(id);
+    const handleClick = async(id:string)=>{
+        try {
+            setActiveItem(id);
+            const response = await userService.getAllTasks(id)
+            if(response.error)throw new Error(response.message)
+            const tasks:Task[] = response.data;
+            setTasks(tasks)
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : 'Unkown error'
+            console.log(errorMessage);
+        }
     }
     const handleListUpdate = async()=>{
         try {
