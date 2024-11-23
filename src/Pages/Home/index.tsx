@@ -13,13 +13,16 @@ import { removeToken } from '../../Utils/auth';
 import Dialog from '../../Components/Dialog';
 import { Response } from '../../Entity/response';
 import ListForm from './Components/ListForm';
+import { MdTaskAlt } from "react-icons/md";
+import TaskForm from './Components/TaskForm';
 
 const Home:React.FC<HomeProps> = ()=>{
-    const {lists, setLists} = useListStore();
+    const {lists, setLists, activeItem} = useListStore();
     const {user, setUser} = useUserStore();
     const [innerWidth, setInnerWidth] = useState<number>(window.innerWidth);
     const [showNewItemDialog, setShowNewItemDialog] = useState<boolean>(false);
     const [message, setMessage] = useState<{message:string, show:boolean}>({message:"", show:false});
+    const [displayNewTaskForm, setDisplaynewTaskForm] = useState<boolean>(false);
 
     const handleInnerWidth = ()=>{
         setInnerWidth(window.innerWidth)
@@ -91,11 +94,21 @@ const Home:React.FC<HomeProps> = ()=>{
                         <ListForm getAllLists={getAllLists} setShowNewItemDialog={setShowNewItemDialog} setMessage={setMessage}/>
                     </NewItemDialog>
                 </div>:undefined}
-                <h2>@{user.user}</h2>
-                <h1 className='list-name'>{lists.length>0?<p className='font-extrabold text-lg'>Lists</p>:"Create a new list"}</h1>
+                <div className='relative flex items-center justify-between w-full pr-20 mt-10'>
+                    <h2>@{user.user}</h2>
+                    {displayNewTaskForm?<div className='absolute right-6 top-5'>
+                        <NewItemDialog icon={{icon_node:<MdTaskAlt className='font-bold text-5xl text-app-green'/>,headline:'New task'}}>
+                            <TaskForm setDisplaynewTaskForm={setDisplaynewTaskForm}/>
+                        </NewItemDialog>
+                    </div>:undefined}
+                    {activeItem?<button onClick={()=>{setDisplaynewTaskForm(true)}} className='btn border-2 border-dashed border-app-green text-app-green font-bold hover:bg-app-green hover:text-white'>New task</button>:undefined}
+                </div>
+                <h1 className='list-name'>{lists.length>0?<p className='font-extrabold text-lg'>{!activeItem?'List':lists.find(elem=>elem._id===activeItem)?.name}</p>:"Create a new list"}</h1>
                 {
                     lists.length > 0?(
-                        innerWidth>700?undefined:<Lists lists={lists} innerWidth={innerWidth}/>
+                        innerWidth>700?<div>
+
+                        </div>:<Lists lists={lists} innerWidth={innerWidth}/>
                     ):<img src="https://res.cloudinary.com/dcezb5utw/image/upload/v1731703774/taskm/hh7syclotluewskbc2fm.png" alt="notes icon" className='w-[40em] mx-auto my-auto'/>
                 }
                 <MdAddBox className='new-list-floating' onClick={()=>setShowNewItemDialog(true)}/>

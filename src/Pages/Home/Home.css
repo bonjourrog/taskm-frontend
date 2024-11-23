@@ -40,7 +40,7 @@
 .home__main-content{
     @apply relative flex flex-col items-start h-[calc(100%-7em)] px-4;
 }
-.home__main-content>h2{
+.home__main-content>div>h2{
     @apply hidden py-6 text-zinc-400;
 }
 .list-name{
@@ -65,7 +65,7 @@
     .home__main-content{
         @apply pl-20;
     }
-    .home__main-content>h2{
+    .home__main-content>div>h2{
         @apply block;
     }
     .new-list-floating{
