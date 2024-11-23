@@ -1,6 +1,7 @@
 import { Response } from '../Entity/response';
 import { List } from '../Entity/list';
 import api from './api';
+import { Task } from '../Entity/task';
 
 const createList = async(list:Partial<List>, user_id:string):Promise<Response>=>{
     try {
@@ -38,10 +39,20 @@ const updateList = async(list_id:string, list:List):Promise<Response>=>{
         return error.response.data
     }
 }
+const createTask = async(task:Task):Promise<Response>=>{
+    try {
+        const token: string = localStorage.getItem("authToken") as string;
+        const {data} = await api.post('task/',task,{headers:{Authorization:token}})
+        return data
+    } catch (error:any) {
+        return error.response.data
+    }
+}
 
 export const  userService = {
     createList,
     getAll,
     deleteList,
-    updateList
+    updateList,
+    createTask
 }
