@@ -48,11 +48,11 @@ const Signup: React.FC<SignupProps> = ()=>{
             <form onSubmit={handleOnSubmit}>
                 <label htmlFor="" className='w-full text-zinc-700 font-bold text-sm'>
                     Email
-                    <input onChange={handleOnChange} value={formData.email} type="email" name="email" className='input' />
+                    <input autoComplete="off" onChange={handleOnChange} value={formData.email} type="email" name="email" className='input' />
                 </label>
                 <label htmlFor="" className='w-full text-zinc-700 font-bold text-sm'>
                     User
-                    <input onChange={handleOnChange} value={formData.user_name} type="text" name="user_name" className='input' />
+                    <input autoComplete="off" onChange={handleOnChange} value={formData.user_name} type="text" name="user_name" className='input' />
                 </label>
                 <label htmlFor="" className='w-full text-zinc-700 font-bold text-sm'>
                     Password

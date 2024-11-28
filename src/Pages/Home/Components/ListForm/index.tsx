@@ -38,7 +38,7 @@ const ListForm: React.FC<ListFormProps> = ({getAllLists, setShowNewItemDialog, s
     }
     return <form className='flex flex-col gap-4' onSubmit={handleOnSubmit}>
         <div className='relative flex items-center gap-4'>
-                <input onChange={handleOnChange} name="name" value={newList.name} type="text" className='input' placeholder='List name'/>
+                <input autoComplete='off' onChange={handleOnChange} name="name" value={newList.name} type="text" className='input' placeholder='List name'/>
                 <TbColorFilter onClick={()=>setShowColorPicker(true)} className='text-zinc-400 text-xl cursor-pointer hover:text-app-green'/>
                 {showColorPicker?<ColorPicker  setShowColorPicker={setShowColorPicker}/>:undefined}
         </div>

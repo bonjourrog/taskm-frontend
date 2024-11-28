@@ -36,7 +36,7 @@ const Signin: React.FC<SigninProps> = ()=>{
             <form onSubmit={handleOnSubmit}>
                 <label htmlFor="" className='w-full text-zinc-700 font-bold text-sm'>
                     email
-                    <input onChange={handleOnChangeInput} type="email" name="email" className='input'/>
+                    <input autoComplete="off" onChange={handleOnChangeInput} type="email" name="email" className='input'/>
                 </label>
                 <label htmlFor="" className='w-full text-zinc-700 font-bold text-sm'>
                     Password

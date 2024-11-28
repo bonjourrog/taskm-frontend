@@ -35,8 +35,8 @@ const TaskForm:React.FC<TaskFormProps> = ({setDisplaynewTaskForm})=>{
         }
     }
     return <form onSubmit={handleCreateTask} className='task-form'>
-    <input onChange={handleInputOnChange} className='input' name='name' type="text" placeholder='Task name' />
-    <textarea onChange={handleInputOnChange} className='input' name="description" placeholder='Description'></textarea>
+    <input autoComplete="off" onChange={handleInputOnChange} className='input' name='name' type="text" placeholder='Task name' />
+    <textarea autoComplete="off" onChange={handleInputOnChange} className='input' name="description" placeholder='Description'></textarea>
     <div>
         <button onClick={()=>setDisplaynewTaskForm(false)}  className='btn btn--cancel'>Cancel</button>
         <input className='btn btn--primary' type="submit" value={'Accept'}/>
