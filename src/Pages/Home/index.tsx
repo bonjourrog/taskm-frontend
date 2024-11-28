@@ -104,7 +104,7 @@ const Home:React.FC<HomeProps> = ()=>{
                             <TaskForm setDisplaynewTaskForm={setDisplaynewTaskForm}/>
                         </NewItemDialog>
                     </div>:undefined}
-                    {activeItem?<button onClick={()=>{setDisplaynewTaskForm(true)}} className='btn border-2 border-dashed border-app-green text-app-green font-bold hover:bg-app-green hover:text-white'>New task</button>:undefined}
+                    {activeItem && innerWidth>700?<button onClick={()=>{setDisplaynewTaskForm(true)}} className='btn border-2 border-dashed border-app-green text-app-green font-bold hover:bg-app-green hover:text-white'>New task</button>:undefined}
                 </div>
                 <h1 className='list-name'>{lists.length>0?<p className='font-extrabold text-lg'>{!activeItem?'List':lists.find(elem=>elem._id===activeItem)?.name}</p>:"Create a new list"}</h1>
                 {
