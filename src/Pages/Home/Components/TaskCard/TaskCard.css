@@ -8,7 +8,8 @@
     @apply flex items-center gap-2;
 }
 .task-card__checkbox{
-    @apply flex items-center justify-center w-4 h-4 shadow-lg shadow-app-green rounded-sm cursor-pointer;
+    box-shadow: 0em 0em 1em .1em #36b06f52;
+    @apply flex items-center justify-center w-4 h-4 rounded-sm cursor-pointer;
 }
 .task-card__checkbox-icon{
     @apply text-white text-xs;
