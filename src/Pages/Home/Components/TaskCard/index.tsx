@@ -6,9 +6,11 @@ import { FaCheck } from "react-icons/fa";
 import { userService } from '../../../../services/user';
 import { Task } from '../../../../Entity/task';
 import useTaskStore from '../../../../store/useTaskStore';
+import useListStore from '../../../../store/useListStore';
 
 const TaskCard: React.FC<TaskCardProps> = ({task})=>{
     const {setTasks, tasks} = useTaskStore()
+    const {setActiveItem} = useListStore();
     const handleTaskUpdate = async(_task:Task)=>{
         try {
             const response = await userService.updateTask(_task._id, _task)
@@ -25,6 +27,18 @@ const TaskCard: React.FC<TaskCardProps> = ({task})=>{
             console.log('error', errorMessage);
         }
     }
+    const handleTaskDelete = async(task_id: string)=>{
+        try {
+            const res = await userService.deleteTask(task_id);
+            if(res.error)throw new Error(res.message);
+            const taskResponse = await userService.getAllTasks(setActiveItem);
+            setTasks(taskResponse.data);
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : 'Unkown error';
+            console.log('error', errorMessage);
+        }
+
+    }
     return <div data-aos="zoom-out" className='task-card'>
         <div className='task-card__leftside'>
             <div onClick={()=>{handleTaskUpdate({...task, done:!task.done})}} className={`task-card__checkbox ${task.done?'bg-app-green':'bg-white'}`}>
@@ -37,7 +51,7 @@ const TaskCard: React.FC<TaskCardProps> = ({task})=>{
         </div>
         <div className='task-card__rightside'>
             <FaRegNoteSticky className='text-app-green cursor-pointer'/>
-            <MdDeleteOutline className='text-app-red cursor-pointer'/>
+            <MdDeleteOutline onClick={()=>handleTaskDelete(task._id)} className='text-app-red cursor-pointer'/>
         </div>
 
     </div>
