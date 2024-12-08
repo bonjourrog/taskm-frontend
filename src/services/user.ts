@@ -66,6 +66,15 @@ const updateTask = async(task_id: string, task:Task):Promise<Response>=>{
         return error.response.data
     }
 }
+const deleteTask = async(task_id: string):Promise<Response>=>{
+    try {
+        const token: string = localStorage.getItem("authToken") as string;
+        const {data} = await api.delete(`task/${task_id}`,{headers:{Authorization:token}});
+        return data;
+    } catch (error:any) {
+        return error.response.data;
+    }
+}
 
 export const  userService = {
     createList,
@@ -74,5 +83,6 @@ export const  userService = {
     updateList,
     createTask,
     getAllTasks,
-    updateTask
+    updateTask,
+    deleteTask
 }
