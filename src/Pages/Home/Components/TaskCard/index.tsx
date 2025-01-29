@@ -45,7 +45,7 @@ const TaskCard: React.FC<TaskCardProps> = ({task})=>{
                 {task.done?<FaCheck className='task-card__checkbox-icon'/>:undefined}
             </div>
             <p className='task-card__title'>
-                <span className='absolute hidden group-hover:block text-nowrap -top-7 left-1/2 transform -translate-x-1/2 text-xs bg-app-green target text-white px-1 py-1 rounded-sm opacity-85'>Double click to edit</span>
+                <span className='task-card__tooltip'>Double click to edit</span>
                 {task.name}
             </p>
         </div>

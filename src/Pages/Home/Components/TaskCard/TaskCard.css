@@ -15,7 +15,10 @@
     @apply text-white text-xs;
 }
 .task-card__title{
-    @apply relative font-bold cursor-text select-none;
+    @apply px-1 border-2 border-white relative font-bold cursor-text select-none;
+}
+.task-card__title:hover{
+    @apply border-2 border-dashed border-emerald-300;
 }
 .task-card__title:hover>.task-card__tooltip{
     @apply block;
