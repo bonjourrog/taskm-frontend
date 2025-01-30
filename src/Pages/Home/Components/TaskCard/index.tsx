@@ -13,6 +13,7 @@ const TaskCard: React.FC<TaskCardProps> = ({task})=>{
     const {setTasks, tasks} = useTaskStore();
     const {activeItem} = useListStore();
     const [editTask, setEditTask] = useState<boolean>(false);
+    const [showDescription, setShowDescription] = useState<boolean>(false);
     const [taskName, setTaskName] = useState<string>("");
     const handleTaskUpdate = async(_task:Task)=>{
         try {
@@ -54,6 +55,7 @@ const TaskCard: React.FC<TaskCardProps> = ({task})=>{
         setTaskName(task.name)
     }, [])
     return <div data-aos="zoom-out" className='task-card'>
+        {showDescription?<div className='task-description'>{task.description}</div>:undefined}
         <div className='task-card__leftside'>
             <div onClick={()=>{toggleTask({...task, done:!task.done})}} className={`task-card__checkbox ${task.done?'bg-app-green':'bg-white'}`}>
                 {task.done?<FaCheck className='task-card__checkbox-icon'/>:undefined}
@@ -64,7 +66,7 @@ const TaskCard: React.FC<TaskCardProps> = ({task})=>{
             </div>
         </div>
         <div className='task-card__rightside'>
-            <FaRegNoteSticky className='text-app-green cursor-pointer'/>
+            <FaRegNoteSticky onClick={()=>setShowDescription(!showDescription)} className={`${showDescription?'text-app-green':'text-gray-300'} cursor-pointer`}/>
             <MdDeleteOutline onClick={()=>handleTaskDelete(task._id)} className='text-app-red cursor-pointer'/>
         </div>
 

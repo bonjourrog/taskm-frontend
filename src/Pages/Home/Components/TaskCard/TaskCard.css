@@ -1,5 +1,8 @@
 .task-card{
-    @apply flex items-center justify-between p-3 px-6 bg-white rounded-sm w-full ml-6;
+    @apply flex items-center justify-between p-3 px-6 bg-white rounded-sm w-[90%] ml-6;
+}
+.task-description{
+    @apply absolute -right-28 top-0 p-2 max-w-24 w-24 text-emerald-500 bg-emerald-50 rounded-sm shadow-md shadow-zinc-200 border-2 border-dashed border-emerald-300;
 }
 .task-card__leftside{
     @apply flex items-center gap-4;
