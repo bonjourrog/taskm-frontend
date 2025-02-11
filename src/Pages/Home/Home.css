@@ -14,7 +14,7 @@
     @apply text-app-green text-lg;
 }
 .logo__text{
-    @apply font-bold;
+    @apply font-bold cursor-pointer;
 }
 .home__content{
     @apply w-full h-full bg-white;

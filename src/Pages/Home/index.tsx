@@ -17,23 +17,23 @@ import { MdTaskAlt } from "react-icons/md";
 import TaskForm from './Components/TaskForm';
 import useTaskStore from '../../store/useTaskStore';
 import TaskCard from './Components/TaskCard';
+import { MdOutlineLibraryAdd } from "react-icons/md";
 
 const Home:React.FC<HomeProps> = ()=>{
-    const {lists, setLists, activeItem} = useListStore();
+    const {lists, setLists, activeItem, setActiveItem} = useListStore();
     const {user, setUser} = useUserStore();
     const {tasks} = useTaskStore();
     const [innerWidth, setInnerWidth] = useState<number>(window.innerWidth);
     const [showNewItemDialog, setShowNewItemDialog] = useState<boolean>(false);
     const [message, setMessage] = useState<{message:string, show:boolean}>({message:"", show:false});
     const [displayNewTaskForm, setDisplaynewTaskForm] = useState<boolean>(false);
-
     const handleInnerWidth = ()=>{
         setInnerWidth(window.innerWidth)
     }
     const LogoComponent = ()=>{
         return <div className="logo">
         <HiClipboardList className="logo__icon"/>
-        <span className="logo__text">TASKM</span>
+        <span onClick={()=>setActiveItem("")} className="logo__text">TASKM</span>
     </div>
     }
     const getAllLists = async()=>{
@@ -118,10 +118,27 @@ const Home:React.FC<HomeProps> = ()=>{
                                 <p>Done</p>
                                 {tasks && tasks.length>0?tasks.map(task=>task.done?<TaskCard key={task._id} task={task}/>:undefined):undefined}
                             </div>
-                        </div>:<Lists lists={lists} innerWidth={innerWidth}/>
+                        </div>:<div className='flex w-full overflow-hidden'>
+                            <div className={`flex-none w-full transform duration-150 ease-in-out ${activeItem ? '-translate-x-full' : '-translate-x-0'}`}>
+                                <Lists lists={lists} innerWidth={innerWidth}/>
+                            </div>
+                            <div className={`flex-none w-full transition-all duration-150 ease-in-out -mr-40 ${activeItem ? '-translate-x-full' : '-translate-x-0'}`}>
+                                <div className='flex flex-col gap-4 ml-0'>
+                                    <p>Todo</p>
+                                    {tasks && tasks.length>0?tasks.map(task=>!task.done?<TaskCard key={task._id} task={task}/>:undefined):undefined}
+                                </div>
+                                <div className='flex flex-col gap-4 ml-0'>
+                                    <p>Done</p>
+                                    {tasks && tasks.length>0?tasks.map(task=>task.done?<TaskCard key={task._id} task={task}/>:undefined):undefined}
+                                </div>
+                            </div>
+                        </div>
                     ):<img src="https://res.cloudinary.com/dcezb5utw/image/upload/v1731703774/taskm/hh7syclotluewskbc2fm.png" alt="notes icon" className='w-[40em] mx-auto my-auto'/>
                 }
-                <MdAddBox className='new-list-floating' onClick={()=>setShowNewItemDialog(true)}/>
+                {!activeItem?<MdAddBox className='new-list-floating' onClick={()=>setShowNewItemDialog(true)}/>
+                :<button onClick={()=>{setDisplaynewTaskForm(true)}} className='new-list-floating'>
+                    <MdOutlineLibraryAdd/>
+                </button>}
             </section>
         </section>
     </main>

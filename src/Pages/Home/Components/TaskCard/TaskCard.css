@@ -32,3 +32,8 @@
 .task-card__tooltip{
     @apply absolute hidden text-nowrap -top-7 left-1/2 transform -translate-x-1/2 text-xs bg-app-green text-white px-1 py-1 rounded-sm opacity-85;
 }
+@media screen and (max-width:700px) {
+    .task-card{
+        @apply m-0 w-3/4;
+    }
+}

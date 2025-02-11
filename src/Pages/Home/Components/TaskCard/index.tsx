@@ -7,7 +7,7 @@ import { userService } from '../../../../services/user';
 import { Task } from '../../../../Entity/task';
 import useTaskStore from '../../../../store/useTaskStore';
 import useListStore from '../../../../store/useListStore';
-import { FocusEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const TaskCard: React.FC<TaskCardProps> = ({task})=>{
     const {setTasks, tasks} = useTaskStore();
@@ -31,6 +31,7 @@ const TaskCard: React.FC<TaskCardProps> = ({task})=>{
             const res = await userService.deleteTask(task_id);
             if(res.error)throw new Error(res.message);
             const taskResponse = await userService.getAllTasks(activeItem);
+            if(taskResponse.error)throw new Error(taskResponse.message);
             setTasks(taskResponse.data);
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'Unkown error';
