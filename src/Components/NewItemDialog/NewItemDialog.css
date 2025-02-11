@@ -2,7 +2,7 @@
     @apply flex flex-col gap-4 w-80 h-auto p-8 shadow-lg shadow-zinc-200 rounded-3xl bg-white;
 }
 .header{
-    @apply mx-auto flex flex-col gap-2 font-bold text-app-black;
+    @apply relative  mx-auto flex flex-col gap-2 font-bold text-app-black;
 }
 .new-item-dialog__message{
     @apply font-bold;
